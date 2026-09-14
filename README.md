@@ -18,3 +18,5 @@
 - Additional Client Problem: Everyone
 - Final Report: Everyone
 
+## Weekly tasks
+- [week 1 tasks](Week1.md)
