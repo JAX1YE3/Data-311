@@ -11,5 +11,5 @@
 - Identify the variables required for the project: Needs to be discussed
 - Draft the relational database schema: Needs to be discussed
 - Design the spreadsheet structure: Needs to be discussed
-- Select preliminary financial and environmental impact metrics: Needs to be discussed
+- Select preliminary financial and environmental impact metrics and worm compost metrics: Needs to be discussed
 - Identify missing data, permissions, costs or conversion factors: Needs to be discussed
