@@ -1,0 +1,62 @@
+-- Updates: 
+-- 9/18/2026
+-- This is a database audit for the group DND. It contains tables for 
+-- Locations, Recycling, Landfill, Compost, Contents, and Thorough Investigation.
+-- Each containing events that describe their collection, location, and type of content. 
+-- The thorough investigation table contains information about the content type, 
+-- date of investigation, total weight, contamination present, contamination type,
+-- contamination weight, good condition, condition description, and good condition weight.
+
+CREATE TABLE Locations (
+    LocationID INT PRIMARY KEY,
+    LocationName VARCHAR(64) NOT NULL
+);
+-- I am trying to make a type ID for recycling, Landfill, and Compost 
+-- I think I would rather put the type ID in the Contents table and then reference that 
+--in the Recycling table, etc. It removes the need for a boolean.
+-- I will create a table called Contents with a ContentTypeID and ContentTypeName. 
+--Then I will create a table called Recycling with a RecyclingID, LocationID, and DT. 
+--The LocationID will be a foreign key that references the Locations table.
+
+CREATE TABLE Recycling (
+    RecyclingID INT PRIMARY KEY,
+    LocationID INT NOT NULL,
+    DT_collected DATETIME NOT NULL,
+    FOREIGN KEY (LocationID) REFERENCES Locations(LocationID) 
+);
+CREATE TABLE Landfill (
+    LandfillID INT PRIMARY KEY,
+    LocationID INT NOT NULL,
+    DT_collected DATETIME NOT NULL,
+    FOREIGN KEY (LocationID) REFERENCES Locations(LocationID) 
+);
+CREATE TABLE Compost (
+    CompostID INT PRIMARY KEY,
+    LocationID INT NOT NULL,
+    DT_collected DATETIME NOT NULL,
+    FOREIGN KEY (LocationID) REFERENCES Locations(LocationID) 
+);
+CREATE TABLE Contents(
+    ContentTypeID INT PRIMARY KEY, -- should be basic and relate to specific IDs
+    ContentTypeName VARCHAR(64) NOT NULL,
+    RecyclingID INT NOT NULL,
+    LandfillID INT NOT NULL,
+    CompostID INT NOT NULL
+    FOREIGN KEY (RecyclingID) REFERENCES Recycling(RecyclingID),
+    FOREIGN KEY (LandfillID) REFERENCES Landfill(LandfillID),
+    FOREIGN KEY (CompostID) REFERENCES Compost(CompostID)
+);
+CREATE TABLE Throrough_Investigation (
+    Investigation ID INT PRIMARY KEY,
+    ContentTypeName VARCHAR(64) NOT NULL,
+    InvestigationDate DATETIME NOT NULL,
+    ContentTypeID INT NOT NULL,
+    TotalWeight DECIMAL(10, 2) NOT NULL,
+    ContaminationPresent boolean NOT NULL,
+    ContaminationType VARCHAR(64),
+    ContaminationWeight DECIMAL(10, 2),
+    GoodCondition boolean NOT NULL,
+    ConditionDescription VARCHAR(256),
+    GoodConditionWeight DECIMAL(10, 2),
+    FOREIGN KEY (ContentTypeID) REFERENCES Contents(ContentTypeID)
+);
